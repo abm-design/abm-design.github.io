@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>full</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+table {
+display: table; overflow: auto;
+max-width: 100%;
+border-collapse: collapse;
+page-break-inside: avoid;
+}
+table th {
+text-align: center;
+font-weight: bold;
+}
+table td,table th {
+border: 1px solid #dfe2e5;
+padding: 6px 13px;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #c6cbd1;
+}
+table tr:nth-child(2n) {
+background-color: #f6f8fa;
+}
+</style>
+</head>
+<body>
+<h1 id="agents-equations-and-economics">Agents, Equations, and
+Economics</h1>
+<p>Ron Wallace, Ph.D. Department of Anthropology (retired), University
+of Central Florida, Orlando, Florida 32816 USA</p>
+<p>ronaldlynnwallace@gmail.com</p>
+<h2 id="abstract">Abstract</h2>
+<p>Critiques of Neoclassical Economics extend, unsurprisingly, to its
+mathematical structure. The discussion has largely focused on General
+Equilibrium Theory (GET), a formalism developed by Léon Walras over a
+century ago. Internally consistent, but highly unrealistic, GET lacks
+predictive power, and has been a historical failure. As an alternative,
+this article proposes a methodology largely developed by Gräbner et
+al. (2019), in which Agent-Based Models (ABMs) are linked with existing
+Equation-Based Models (EBMs) as a means of developing a more powerful
+formalism. The approach is illustrated by application to the
+Arrow-Debreu (AD) model of Neoclassical theory, and the Kuznets Curve of
+Developmental Economics. Broader implications for the social and natural
+sciences are briefly considered.</p>
+<p>Key Words: economic methodology, Agent-based modeling, Equation-based
+modeling</p>
+<p>JEL Classification Codes: C02 C63 E13</p>
+<h2 id="introduction">Introduction</h2>
+<p>Criticism of neoclassical economic theory has frequently extended to
+its mathematical structure. The focus of these critiques, now and for
+over a century, has been equilibrium theory: a formalism which specifies
+(among other properties) rational actors, full employment, and perfect
+competition (Turk, 2012). These idealized assumptions were defended by
+Milton Friedman (1966, orig. 1953) who argued that lack of realism in
+economic models was acceptable if the models had high predictive power.
+Apart from the question of realism in scientific models, to be evaluated
+briefly below, it was precisely in the realm of prediction that
+neoclassical economics was a historical failure. As Alberto
+Ruiz-Villaverde et al. (2019) have shown, the elegant mathematical
+edifice did not anticipate economic crises from its inception to the
+present day nor generate policies to effectively counteract them. In a
+somewhat earlier historical study, Nobel laureate Paul Krugman reached
+essentially the same verdict, diagnosing a long tradition of “mistaking
+beauty for truth” (Krugman, 2009). But while it is all well and good –
+indeed essential – to critique the formalism, it is of course a more
+difficult prospect to develop an alternative.</p>
+<p>One possible solution is to use computational models – in particular,
+Agent-Based Models (ABMs) – to simulate and refine economic equations
+(Gräbner et al., 2019). (For a valuable discussion of a similar
+methodological situation in ecology, see DeAngelis and Yurek, 2015). The
+rationale is twofold: Agent-Based Models (ABMs), the focus of the
+present essay, are more methodologically compatible with Equation-Based
+Models (EBMs) than they may first appear. The Church-Turing Thesis (CTT)
+stipulates (essentially) that any real-world computation can be
+converted into a Turing machine computation (orig. Church, 1935). In
+addition, innovations in computational power – including, in particular,
+the merging of logic and memory functions, thereby largely surmounting
+the von Neumann “bottleneck” problem (Peper, 2017) – should facilitate
+the modelling of complex, multi-scale economic systems. David Colander
+speculates:</p>
+<p>maybe this future historian [of economics] will also point out that
+eventually, economics returned to its classical roots, but modernized
+them to take into account enormous advances in analytic and
+computational power that changed the way empirical data could be
+integrated with the mathematics of complex systems involving interacting
+strategic agents. (2011, p.20)</p>
+<p>The essay begins with a defense of realism in economic
+model-building. We briefly contrast realist and non-realist philosophies
+of science, and suggest that in analyses of complex systems (e.g.,
+economies, ecosystems), realist approaches provide greater information
+regarding the systems under study, and thus yield higher predictive
+power (Gräber et al., 2019; Maki, 2009). We then examine the properties
+of Agent-Based Models (ABMs) and Equation-Based Models (EBMs). We
+emphasize the empiricism of ABMs, which is consistent with a realist
+epistemology. Also, in accord with CTT, we underscore the mathematical
+compatibility of ABMs with EBMs. We then turn to applications in
+economics. Two pioneering studies are addressed in some detail: Albin
+and Foley (1992) utilized the complementarity of ABM and EBM modeling to
+elicit the properties of a decentralized Walrasian auction, and thereby
+refine a key component of Neoclassical Formalism (Arrow and Debreu,
+1954); Gräbner et al. (2019) apply the dialog of models to an evaluation
+of the Kuznets Inverted U-curve Hypothesis that stipulates the
+relationship between economic growth and income inequality (Kuznets,
+1955). Finally, we examine the broader implications for scientific
+investigation. Risking exaggeration, we suggest that the structured
+interplay of equation and simulation will have wide applicability, and
+may prove paradigmatically significant in the social and natural
+sciences.</p>
+<h2 id="model-building-realism-agents-equations">Model-building:
+Realism, agents, equations</h2>
+<p>Nearly 70 years ago, Milton Friedman defended a non-realist
+philosophy of economic interpretation (Friedman, 1953). His Essays in
+Positive Economics and, in particular, the essay on “Positive
+Methodology” asserted an epistemology that was, and remains,
+quintessentially neoclassical. In a widely quoted passage, Friedman
+stated: “Truly important and significant hypotheses will be found to
+have ‘assumptions’ that are wildly inaccurate descriptive
+representations of reality, and, in general, the more significant the
+theory the more unrealistic the assumptions” (1966, orig. 1953, p.14).
+History has not been kind to this viewpoint, or to its larger context of
+neoclassical theory. However, the predictive failure of the framework
+did not lead, contra Friedman, to a questioning of its assumptions.
+Rather, the view was defended by an appeal to internal consistency:
+logico-mathematical agreement within its axiomatized structure. Gérard
+Debreu (1986, p.1265) was unequivocal: “According to the schema, an
+axiomatized theory has a mathematical form that is completely separated
+from its economic content. If one removes the economic interpretation of
+the primitive concepts, of the assumptions…its bare mathematical
+structure must still stand.”</p>
+<p>In marked contrast to this perspective, Leonardo Ivarola (2018) seeks
+to restore realism to economic theory. Ivarola critiques Friedman (1953)
+– and, implicitly, the “general impossibility of neoclassical economics”
+(Fine, 2011) – on both ontological and epistemological grounds. In the
+first of these, Friedman’s notion of invariant relations among economic
+phenomena is replaced with an open-ended, decision-tree approach.
+Economic actors are, after all, humans; their economic decisions are
+shaped by their histories, their (emotionalized) personalities, and
+their sociocultural surroundings. Second, the flawed ontological
+assumption of invariance yielded a flawed epistemology that did not
+admit anomalies; as a result, and for nearly a century, the neoclassical
+framework has not predicted bubbles and crashes (Ruiz-Villaverde at al.,
+2019). Apart from theoretical critique, this history alone would suggest
+the need for a realistic, empirical economics.</p>
+<p>Agent-based modeling (ABM) and equation-based modeling (EBM) can be
+creatively linked to address the conceptual flaws in neoclassical theory
+and, importantly, to develop a more realistic formalism. ABMs are
+simulations in which abstract entities (agents), governed by programmed
+rules, interact with one another in an artificial micro-world (Bruch and
+Atwell, 2015). Not infrequently, this process generates aggregate –
+emergent – properties unforeseen by the investigator. These, in turn,
+may contribute to the development of novel hypotheses. In contrast, and
+complementarily, EBMs typically model general systemic properties, and
+not individual features; EBMs are much less granular (Gräbner et al.,
+2019). More exactly, EBMs utilize ordinary differential equations (ODEs)
+to express the change in state of a many-component system over some
+specified period of time (Daun et al., 2008). That these highly
+contrastive approaches could be productively deployed together was
+recognized nearly 25 years ago. In population ecology, William Wilson
+(1998) demonstrated the complementarity of an ABM with an EBM in
+modeling the dynamics of predator-prey relations. The ABM simulated the
+aggregate effects of individual animal decisions, while the EBM
+expressed predator-prey population dynamics based on a traditional
+reaction-diffusion (RD) model of interacting chemical species (Kordo and
+Miura, 2010). Use of both approaches led to the mathematical refinement,
+and increased ecological realism, of small, dispersed populations,
+stochastic contact, and occasional extinctions.</p>
+<h2 id="economic-applications-addressing-the-arrow-debreu-and-kuznets-models">Economic
+Applications: Addressing the Arrow-Debreu and Kuznets Models</h2>
+<p>In economics, as in population ecology, the interaction of an ABM
+with an EBM typically begins with the latter, which may be highly
+stylized (Gräbner et al., 2019). The equation is then converted into a
+preliminary ABM, which may be equally non-realistic. The prototype ABM
+is then tested to determine if it yields results equivalent to the EBM.
+What follows is a stepwise process – informed to no small extent by the
+creativity of the investigator – in which the ABM is enriched by
+empirical data, and the more “transparent” model may be expressed as a
+refined equation. The procedure is not without risk. As several
+advocates of the method have noted (e.g., Gräbner et al., 2019;
+Marilleau et al., 2018; Leombruni and Richardi, 2005), increasing an
+ABM’s empirical richness through, for example, increased agent
+heterogeneity or greater number of mechanisms can cause the model to be
+unwieldy. However, as Gräbner et al. note, “starting with a simple,
+equation-based version and increasing the model’s complexity stepwise
+helps to preserve its clarity. Also, the fundamental mechanisms of the
+model can usually still be communicated easily via precise equations”
+(Gräbner et al., 2019, p. 765).</p>
+<p>An early application to economics addressed the Arrow-Debreu (AD)
+model, a core concept of neoclassical theory. The AD model, a formal
+proof of General Equilibrium Theory (GET), had posited an auction-like
+setting in which there exists some set of prices that would generate a
+balance of aggregate supply and demand (Arrow and Debreu, 1954). The
+proof has been controversial since its inception. Most notably, János
+Kornai, in an expansive critique, questioned the realism and scientific
+value of an “invisible hand” (Smith, 1776) – as in the AD model – that
+guided a capitalist economy toward equilibrium (Kornai, 1971; Schlefer,
+2012). Contrasting with these critiques is the approach of Peter Albin
+and Duncan Foley, who view the AD proof as a starting point for devising
+a more powerful formalism (Albin and Foley, 1992). What would AD be if
+refined by realistic assumptions? Peter Albin and Duncan Foley (1992)
+developed an ABM in which the “auctioneer” was replaced by
+geographically dispersed agents in a system of decentralized exchange.
+Other key assumptions included costly advertising and bounded
+rationality. The changed assumptions resulted in unequal wealth
+endowments, with possible implications for mathematical modeling and
+economic policymaking.</p>
+<p>In a more recent application, Gräbner et al. (2019) designed an ABM
+which simulated an enriched variation of the Kuznets Curve (Kuznets,
+1955) and its underlying EBM, a formalism widely used in Development
+Economics. Simon Kuznets proposed that a rise in per capita income in a
+developing country was correlated with a sharp initial rise in economic
+inequality, which then plateaued, and ultimately declined, thus
+describing an inverted u-curve. (In an important variation – the
+Environmental Kuznets Curve (EKC) – directly relevant to sustainability,
+environmental deterioration is substituted for inequality. See Carson,
+2010). The pattern was largely driven by rural-to-urban migration in an
+industrializing society. At the outset, financial opportunities were
+exploited only by a wealthy elite, but subsequently expanded to the
+larger society. Like its contemporary AD, the Kuznets model gave rise to
+an extensive critical literature (Lyubimov, 2017). The hypothesis, it
+has been widely noted, considered the West but not “the rest”: it
+analyzed historical accounts of industrialization in Germany, Great
+Britain, and America, and then extrapolated – in an admittedly
+speculative spirit – to underdeveloped countries. Kuznets, to his
+credit, acknowledges this limitation, observing that the
+agrarian-to-industrial transformation may be markedly different in many
+developing countries, especially with regard to capital formation
+(Kuznets 1955, p. 26).</p>
+<p>Is the Kuznets model valuable despite its flawed inception? The
+question motivated a recent study by Gräbner et al. (2019) utilizing a
+coupled ABM-EBM approach. Because Kuznets’ original model (1955) did not
+contain equations, (although it included tabular data), Gräbner et
+al. developed a hypothetical EBM. The proposed mechanism underlying the
+inverted U curve was an initially wide wealth gap which impeded poor
+agents from transmitting resources (bequests) to their offspring. More
+exactly, Gräbner et al. specify an agent type it {p,r} where p
+designates poor and r designates rich, and each agent possesses an asset
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>h</mi><mrow><mi>i</mi><mi>t</mi></mrow></msub><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">h_{it}&gt;1</annotation></semantics></math>
+which can produce a unique consumption good y. A fraction of the revenue
+deriving from the latter may be saved for bequests, designated by e. If
+e&lt;1, the offspring will receive nothing, and the good y will be
+consumed. The persistence of the latter situation, as for example in an
+autocratic, exploitive economy, increases the threat of revolution,
+thereby generating reform, and a redistributive system. (For a broader
+discussion of the political economy of the Kuznets Curve, including –
+importantly – alternative trajectories (e.g. “autocratic disaster”) see
+Acemoglu and Robinson, 2002). The model was then incorporated into an
+ABM, which also included cultural regulations regarding marriage and
+inheritance, both of which are significant in the economics of
+developing societies. The resulting simulation found that “the time
+horizon of the Kuznets curve will vary with differences in initial
+distribution of wealth, differing degrees of social mobility, and
+alternative inheritance institutions” (Gräbner et al., 2019,
+p. 777).</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Time has not been kind to Neoclassical Economics. From its inception
+to the present, the framework has failed to predict, or correct in a
+timely manner, economic dislocations in western capitalist societies.
+The consequent, and continuing, heterodox critique has frequently
+emphasized the formal axiomatic assumptions that lie at the heart of the
+paradigm. General Equilibrium Theory (GET) was, and has remained, a set
+of highly idealized constructs – e.g., rational agents, full employment,
+an optimized balance of supply and demand. This essay has suggested an
+alternative approach. We have proposed a computational strategy in which
+traditional economic equations can be coupled with agent-based models as
+a basis for developing a more scientifically powerful formalism. We then
+illustrated this viewpoint by sketching two pioneering studies. These
+applications showed how significant dynamic properties, which are
+concealed by an EBM, can be modelled by a realistic, empirically
+grounded ABM, and thereby furnish a basis for formulating a revised
+equation.</p>
+<p>Importantly, the endeavor will involve significant challenges, some
+touching the basic relation of the scientist to reality. How, for
+example, does one choose the simulation approach to be coupled to a
+given equation? We have emphasized ABMs because of their descriptive
+richness, but other methods exist (e.g., cellular automata; mean-field
+game theory). Accordingly, a considerable effort is underway to devise a
+metalanguage which captures the optimally predictive relation between
+the scientist, the simulation, and the real world referent. A recent
+example along these lines is the framework developed by Gräbner (2018):
+from an infinite number of referent (target) properties, a selected set
+is instantiated by software agents, to which they are conceptually
+linked by a “key” (like the legend of a map). Such frameworks, as
+Vallverdu (2014) suggests, are simultaneously retrospective and
+anticipatory. Their notion of a cognitive and instrumental editing of
+reality has a distant antecedent in Kant, while the computational
+properties of interacting artificial agents are introducing a changed
+understanding of scientific experimentation. On the latter aspect,
+Schiaffonati (2016) has noted, a computational investigation will often
+generate unanticipated results. The epistemology is thereby shifting. It
+is a posteriori rather than a priori.</p>
+<p>We conclude by asking if there are broader implications for the
+method outlined here. Does the “dialog of models” have significance not
+only for economic analyses, but for the social sciences generally, and
+indeed for any natural science that examines large, complex systems
+(e.g. population ecology and molecular cell biology)? Donald DeAngelis
+and Simeon Yurek (2015), influenced by the modeling of nonlinear
+dynamics in ecosystems, have recently considered this question.
+Defending the importance of computational models such as ABMs and
+cellular automata in the study of complexity, and presenting an argument
+largely consistent with the essay, they further note: “[S]cience may be
+moving into a period where equations do not play the central role in
+describing dynamic systems that they have played in the last 300 years”
+(p.3857). Perhaps they are right, but this may be a bridge too far. We
+would suggest that equations will probably never be less important – in
+economics, ecology, or any other science – than computational modeling.
+The approaches are interdependent, equally essential, and will share
+center stage. The dual strategy – a methodological pluralism – will
+hopefully promote a more realistic understanding of the dynamics of
+complex systems, as well as increased precision in prediction and
+application.</p>
+<h2 id="references">References</h2>
+<p>Acemoglu, D. and J. Robinson (2002) “The Political Economy of the
+Kuznets Curve”, Review of Development Economics 6(2), pp. 183-203.</p>
+<p>Albin, P. and D. Foley (1992) “Decentralized, dispersed exchange
+without an auctioneer: A simulation study”, Journal of Economic Behavior
+and Organization 18(1), pp.27-51.</p>
+<p>Arrow, K. and G. Debreu (1954) “Existence of an Equilibrium for a
+Competitive Economy”, Econometrica 22(3) pp. 265-290.</p>
+<p>Bruch, E. and J. Atwell (2015) “Agent-based Models in Empirical
+Social Research”, Sociological Methods and Research 44(2),
+pp.186-221.</p>
+<p>Carson, R. (2010) “The Environmental Kuznets Curve: Seeking Empirical
+Regularity and Theoretical Structure”, Review of Environmental Economics
+and Policy 4(1), pp. 3-23.</p>
+<p>Church, A. (1935) “Abstract No. 2004”, Bulletin of the American
+Mathematical Society 41, pp. 332-333.</p>
+<p>Colander, D. (2011) “How Economists Got It Wrong: A Nuanced Account”,
+Critical Review 23 (1-2), pp. 1-27.</p>
+<p>Daun, S., J. Rubin, Y. Vodovotz and G. Clermont (2008)
+“Equation-based models of dynamic biological systems”, Journal of
+Critical Care 23(4) pp. 585-594.</p>
+<p>DeAngelis, D. and S. Yurek (2015) “Equation-Free modeling unravels
+the Behavior of Complex Ecological Systems”, Proceedings of the National
+Academy of Sciences 112(13) pp. 3856-3857.</p>
+<p>Debreu, G. (1986) “Theoretical Models, Mathematical Form, and
+Economic Content”, Econometrica 54(6) pp. 1259-1270.</p>
+<p>Friedman, M. (1966, orig. 1953) “The methodology of positive
+economics” in Essays in Positive Economics, pp. 30-43, Chicago:
+University of Chicago Press.</p>
+<p>Gräbner, C., C. Bale, B. Furtado, B. Alvarez-Pereria, J. Gentile, H.
+Henderson, and F. Lipari (2019) “Getting the Best of Both Worlds?
+Developing Complementary Equation-Based and Agent-Based Models”,
+Computational Economics 53, pp. 763-782.</p>
+<p>Gräbner, C. (2018) “How to relate models to reality? An
+epistemological framework for the validation and verification of
+computational models”, Journal of Artificial Societies and Social
+Simulation 21 (3), p.8.</p>
+<p>Schiaffonati, V (2016) “Stretching the traditional notion of
+experiment in computing explorative experiments”. Science and
+Engineering Ethics 22 (3)pp.647-665. Vallerdu, J. (2014) “What are
+simulations? An epistemological approach”, Procedia Technology 13,
+pp.6-15.</p>
+<p>Ivarola, L. (2018) “A plea for realistic assumptions in economic
+modeling”, Theoria: Revista de Teoría, Historia, y Fundamentos de la
+Clencia 33(3), pp. 417-433.</p>
+<p>Kondo, S. and T. Miura (2010) “Reaction-Diffusion Model as a
+Framework for Understanding Biological Pattern Formation”, Science 29
+(5999), pp. 1616-1620.</p>
+<p>Kornai, J. (1971) “Economic Systems Theory and General Equilibrium
+Theory”, Acta Oeconomica 6(4) pp. 297-317.</p>
+<p>Krugman, P. (2009) “How did economists get it so wrong?”, The New
+York Times Magazine, September 6, 2009.</p>
+<p>Kuznets, S. (1955) “Economic Growth and Income Inequality”, The
+American Economic Review 45(1) pp.1-28.</p>
+<p>Leombruini, R. and Richardi, M. (2005) “Why are economists skeptical
+about agent-based simulations?” Physica A: Statistical Mechanics and
+Applications 355(1), pp. 103-109.</p>
+<p>Lyubimov, I. (2017) “Income inequality revisited 60 years later:
+Piketty vs. Kuznets”, Russian Journal of Economics 3(1) pp. 42-53.</p>
+<p>Mäki, U. (2009) “Missing the world: models of isolations and credible
+surrogate systems”, Erkenntnis 70(1), pp. 29-43.</p>
+<p>Marilleau, N., C. Lang, P. Giraudoux (2018) “Coupling agent-based
+with equation-based models to study spatially explicit megapopulation
+dynamics”, Ecological Modelling 384, pp.34-42.</p>
+<p>Peper, F. (2017) “The end of Moore’s Law: Opportunities for Natural
+Computing?” New Generation Computing 35, pp.253-269.</p>
+<p>Ruiz-Villaverde, A. (2019) “Editor’s Introduction: The Growing
+Failure of the Neoclassical Paradigm in Economics”, American Journal of
+Economics and Sociology 78(1), pp.13-34.</p>
+<p>Schlefer, J. (2012), There is No Invisible Hand”, Harvard Business
+Review, April 10, 2012.</p>
+<p>Turk, M. (2012) “The Mathematical Turn in Economics: Walras, the
+French Mathematicians, and the Road not taken”, Journal of the History
+of Economic Thought 34(02), pp.149-167.</p>
+<p>Wilson, W. (1998) “Resolving Discrepancies Between Deterministic
+Population Models and Individual-Based Simulations”, The American
+Naturalist 151(2) pp.116-134.</p>
+</body>
+</html>

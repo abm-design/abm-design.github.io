@@ -1,0 +1,414 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бифуркационная диаграмма стохастического логистического отображения</title>
+    
+    <!-- Подключаем React и ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Подключаем Babel для поддержки JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Главный контейнер виджета */
+        #widget-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            width: 100%;
+            max-width: 900px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        /* Стили для Fullscreen режима */
+        #widget-container:fullscreen {
+            max-width: 100% !important;
+            height: 100vh;
+            border-radius: 0;
+            padding: 40px;
+            overflow-y: auto;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #widget-container:fullscreen .canvas-wrapper {
+            flex: 1;
+            min-height: 400px;
+        }
+
+        /* Синие кнопки */
+        .btn-blue {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            align-self: flex-start;
+        }
+
+        .btn-blue:hover {
+            background-color: #1d4ed8;
+        }
+
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 16px;
+        }
+
+        .title-area {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        /* ИЗМЕНЕННЫЙ РАЗМЕР И ЦВЕТ ЗАГОЛОВКА */
+        h2 {
+            margin: 0;
+            color: #1e293b;
+            font-size: 22px;
+            line-height: 1.3;
+        }
+
+        .formula-text {
+            color: #475569;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .formula-text sub {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 25px;
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+        }
+
+        /* Крупный шрифт для подписей */
+        label {
+            font-size: 18px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        label b {
+            color: #ef4444;
+            font-size: 20px;
+        }
+
+        /* Обертка для холста разметки */
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            height: 480px; /* Немного увеличили высоту, чтобы подписи осей сидели свободно */
+            margin-top: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #f8fafc;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Кастомизация селекторов (Красные бегунки) */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ef4444;
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: #dc2626;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border: none;
+            border-radius: 50%;
+            background: #ef4444;
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            background: #dc2626;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="widget-container"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function App() {
+            const [selectedR, setSelectedR] = useState(3.5);
+            const [noise, setNoise] = useState(0.015);
+            const [isFullscreen, setIsFullscreen] = useState(false);
+            
+            const canvasRef = useRef(null);
+
+            // Главная функция отрисовки фрактальной диаграммы на холсте Canvas
+            const drawBifurcation = () => {
+                const canvas = canvasRef.current;
+                if (!canvas) return;
+                
+                const ctx = canvas.getContext('2d');
+                
+                const width = canvas.clientWidth;
+                const height = canvas.clientHeight;
+                canvas.width = width;
+                canvas.height = height;
+
+                ctx.clearRect(0, 0, width, height);
+
+                const minR = 2.4;
+                const maxR = 4.0;
+                const minX = 0.0;
+                const maxX = 1.0;
+
+                // Настройки отступов под оси и их названия
+                const paddingLeft = 65;   // Увеличено для размещения вертикальной подписи
+                const paddingBottom = 55; // Увеличено для размещения горизонтальной подписи
+                const paddingTop = 25;
+                const paddingRight = 25;
+
+                const plotWidth = width - paddingLeft - paddingRight;
+                const plotHeight = height - paddingTop - paddingBottom;
+
+                // Рисуем сетку фона
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.lineWidth = 1;
+                ctx.fillStyle = '#64748b';
+                ctx.font = '12px sans-serif';
+
+                // Горизонтальная сетка и разметка оси X (вертикальная шкала состояния системы)
+                for (let i = 0; i <= 5; i++) {
+                    const valY = minX + (maxX - minX) * (i / 5);
+                    const pixelY = paddingTop + plotHeight - (valY / maxX) * plotHeight;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(paddingLeft, pixelY);
+                    ctx.lineTo(width - paddingRight, pixelY);
+                    ctx.stroke();
+                    ctx.fillText(valY.toFixed(1), paddingLeft - 25, pixelY + 4);
+                }
+
+                // Вертикальная сетка и разметка оси R
+                for (let i = 0; i <= 4; i++) {
+                    const valR = minR + (maxR - minR) * (i / 4);
+                    const pixelX = paddingLeft + ((valR - minR) / (maxR - minR)) * plotWidth;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(pixelX, paddingTop);
+                    ctx.lineTo(pixelX, paddingTop + plotHeight);
+                    ctx.stroke();
+                    ctx.fillText(valR.toFixed(2), pixelX - 12, paddingTop + plotHeight + 20);
+                }
+
+                // ========================================================
+                // ТЕКСТОВЫЕ ПОДПИСИ ОСЕЙ
+                // ========================================================
+                ctx.fillStyle = '#1e293b';
+                ctx.font = 'bold 13px sans-serif';
+
+                // Подпись горизонтальной оси (r)
+                const labelR = "Параметр скорости роста (r)";
+                const labelRWidth = ctx.measureText(labelR).width;
+                ctx.fillText(labelR, paddingLeft + (plotWidth / 2) - (labelRWidth / 2), height - 12);
+
+                // Подпись вертикальной оси (x) с поворотом контекста на -90 градусов
+                ctx.save();
+                ctx.translate(18, paddingTop + (plotHeight / 2));
+                ctx.rotate(-Math.PI / 2);
+                const labelX = "Состояние системы (x)";
+                const labelXWidth = ctx.measureText(labelX).width;
+                ctx.fillText(labelX, -labelXWidth / 2, 0);
+                ctx.restore();
+
+
+                // ВЫЧИСЛЕНИЕ И ОТРИСОВКА ТОЧЕК ДИАГРАММЫ
+                for (let pixelX = 0; pixelX < plotWidth; pixelX++) {
+                    const r = minR + (pixelX / plotWidth) * (maxR - minR);
+                    let x = 0.5;
+                    
+                    // 1. Прогрев системы
+                    for (let i = 0; i < 100; i++) {
+                        const randomNoise = (Math.random() * 2 - 1) * noise;
+                        x = r * x * (1.0 - x) + randomNoise;
+                        x = Math.max(0.0, Math.min(1.0, x));
+                    }
+
+                    // 2. Отрисовка стабильных орбит
+                    ctx.fillStyle = 'rgba(37, 99, 235, 0.25)'; 
+                    for (let i = 0; i < 200; i++) {
+                        const randomNoise = (Math.random() * 2 - 1) * noise;
+                        x = r * x * (1.0 - x) + randomNoise;
+                        x = Math.max(0.0, Math.min(1.0, x));
+
+                        const pixelY = paddingTop + plotHeight - ((x - minX) / (maxX - minX)) * plotHeight;
+                        ctx.fillRect(paddingLeft + pixelX, pixelY, 1, 1);
+                    }
+                }
+
+                // Красная прерывистая линия текущего значения r
+                const indicatorX = paddingLeft + ((selectedR - minR) / (maxR - minR)) * plotWidth;
+                if (indicatorX >= paddingLeft && indicatorX <= width - paddingRight) {
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 1.5;
+                    ctx.setLineDash([6, 4]);
+                    ctx.beginPath();
+                    ctx.moveTo(indicatorX, paddingTop);
+                    ctx.lineTo(indicatorX, paddingTop + plotHeight);
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+            };
+
+            useEffect(() => {
+                drawBifurcation();
+            }, [selectedR, noise, isFullscreen]);
+
+            useEffect(() => {
+                const handleResize = () => drawBifurcation();
+                window.addEventListener('resize', handleResize);
+                
+                const handleFullscreenChange = () => setIsFullscreen(!!document.fullscreenElement);
+                document.addEventListener('fullscreenchange', handleFullscreenChange);
+                
+                return () => {
+                    window.removeEventListener('resize', handleResize);
+                    document.removeEventListener('fullscreenchange', handleFullscreenChange);
+                };
+            }, [selectedR, noise]);
+
+            const toggleFullscreen = () => {
+                const element = document.getElementById('widget-container');
+                if (!document.fullscreenElement) {
+                    element.requestFullscreen()
+                        .then(() => setIsFullscreen(true))
+                        .catch((err) => console.error(err));
+                } else {
+                    document.exitFullscreen();
+                    setIsFullscreen(false);
+                }
+            };
+
+            return (
+                <div>
+                    {/* Шапка с новым заголовком */}
+                    <div className="header-actions">
+                        <div className="title-area">
+                            <h2>Бифуркационная диаграмма стохастического логистического отображения</h2>
+                            <div className="formula-text">
+                                x<sub>n+1</sub> = r · x<sub>n</sub>(1 - x<sub>n</sub>) + ξ<sub>n</sub>
+                            </div>
+                        </div>
+                        <button className="btn-blue" onClick={toggleFullscreen}>
+                            {isFullscreen ? <span>🗗 Свернуть окно</span> : <span>🗖 На весь экран</span>}
+                        </button>
+                    </div>
+
+                    {/* Слайдеры */}
+                    <div className="controls">
+                        <div className="control-group">
+                            <label>Сечение r на графике: <b>{Number(selectedR).toFixed(2)}</b></label>
+                            <input 
+                                type="range" 
+                                min="2.4" 
+                                max="4.0" 
+                                step="0.01" 
+                                value={selectedR} 
+                                onChange={(e) => setSelectedR(parseFloat(e.target.value))} 
+                            />
+                        </div>
+                        <div className="control-group">
+                            <label>Размытие хаоса (Амплитуда шума ξ): <b>{Number(noise).toFixed(3)}</b></label>
+                            <input 
+                                type="range" 
+                                min="0.0" 
+                                max="0.06" 
+                                step="0.001" 
+                                value={noise} 
+                                onChange={(e) => setNoise(parseFloat(e.target.value))} 
+                            />
+                        </div>
+                    </div>
+
+                    {/* Поле бифуркационной диаграммы */}
+                    <div className="canvas-wrapper">
+                        <canvas ref={canvasRef}></canvas>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = document.getElementById('widget-container');
+        ReactDOM.createRoot(root).render(<App />);
+    </script>
+</body>
+</html>
