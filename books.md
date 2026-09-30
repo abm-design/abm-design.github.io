@@ -10,7 +10,9 @@ A Better Economics for a Better World](books/farmer1/index.html ':ignore')
 
 2. Robert L. Axtell and J. Doyne Farmer - 
 Agent-Based Modeling in Economics and Finance: 
-Past, Present, and Future (2025) [PDF](books/Axtell_and_Farmer_2025_Agent_based_modeling.pdf ':ignore')
+Past, Present, and Future (2025) 
+[PDF](books/Axtell_and_Farmer_2025_Agent_based_modeling.pdf ':ignore'),
+[HTML](books/Axtell_and_Farmer_2025_Agent_based_modeling.html ':ignore')
 
 
 3. J. Doyne Farmer - Quantitative agent-based models: 
